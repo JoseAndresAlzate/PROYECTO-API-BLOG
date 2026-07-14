@@ -42,8 +42,8 @@ export const getComments = async (req, res, next)=> {
     try {
         const {postId} = req.params;
 
-        const Comments = await Comments.find({ post: postId });
-            if (Comments.length ===0){
+        const comments = await Comment.find({ post: postId });
+            if (comments.length ===0){
                 const error = new Error("No hay comentarios que mostrar.")
                 error.status = 404
                 return next(error)
@@ -51,7 +51,7 @@ export const getComments = async (req, res, next)=> {
         
         res.status(200).json({
             success: true,
-            post: Comments,
+            post: comments,
         });    
 
     }catch (error){
@@ -63,7 +63,7 @@ export const getByIdComments = async (req, res, next)=> {
     try {
         const { commentId } = req.params
 
-        const comment = await comment.findById(commentId);
+        const comment = await Comment.findById(commentId);
             if(!comment){
                 const error = new Error("No se encontró el comentario.")
                 error.status = 404
@@ -76,6 +76,70 @@ export const getByIdComments = async (req, res, next)=> {
         });    
 
     }catch(error){
+        next(error)
+    };
+};
+
+export const updateComment = async(req, res, next)=> {
+    try {
+
+        const { commentId } = req.params;
+        const { content} = req.body;
+
+        const comment = await Comment.findById(commentId);
+
+        if(!comment){
+            const error = new Error("Comentario no encontrado.")
+            error.status = 404
+            return next(error)
+        };
+
+        if(comment.user.toString() !== req.user.userId){
+            const error = new Error("No autorizado.")
+            error.status = 403
+            return next(error)
+        };
+
+        comment.content = content ?? comment.content
+        
+        await comment.save()
+        res.status(200).json({
+            success: true,
+            message: "Comentario actualizado.",
+            comment,
+        });
+
+    }catch(error){
+        next(error)
+    };
+};
+
+export const deleteComment = async (req, res, next)=> {
+    try {
+        const { commentId } = req.params
+
+        const comment = await Comment.findById(commentId)
+
+            if(!comment) {
+                const error = new Error("Comentario no existe.")
+                error.status = 404
+                return next(error)
+            };
+
+            if (comment.user.toString() !== req.user.userId){
+                const error = new Error("No autorizado.");
+                error.status = 403
+                return next(error)
+            };
+
+        await comment.deleteOne();
+        
+        res.status(200).json({
+            success: true,
+            message: "Comentario eliminado con éxito.",
+        });
+
+    } catch(error){
         next(error)
     };
 };

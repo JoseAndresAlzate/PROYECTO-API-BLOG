@@ -1,0 +1,150 @@
+# 📝 Blog API
+
+API REST desarrollada con **Node.js**, **Express** y **MongoDB**, que permite el registro y autenticación de usuarios mediante JWT, la gestión de publicaciones y comentarios, aplicando buenas prácticas de organización, seguridad y manejo de errores.
+
+---
+
+## 🚀 Tecnologías utilizadas
+
+- Node.js
+- Express
+- MongoDB Atlas
+- Mongoose
+- JWT (JSON Web Token)
+- bcrypt
+- dotenv
+
+---
+
+## 📂 Estructura del proyecto
+
+src/
+│
+├── config/
+├── controllers/
+├── middlewares/
+├── models/
+├── routes/
+│
+├── app.js
+└── server.js
+
+---
+
+## ⚙️ Instalación
+
+Clona el repositorio:
+
+```bash
+git clone <URL_DEL_REPOSITORIO>
+```
+
+Ingresa al proyecto:
+
+```bash
+cd proyecto-api-de-blog-simple
+```
+
+Instala las dependencias:
+
+```bash
+npm install
+```
+
+---
+
+## 🔐 Variables de entorno
+
+Crea un archivo `.env` en la raíz del proyecto.
+
+```env
+PORT=4000
+
+MONGO_URI=tu_cadena_de_conexion
+
+SECRET_TOKEN=tu_clave_secreta
+```
+
+---
+
+## ▶️ Ejecutar el proyecto
+
+Modo desarrollo:
+
+```bash
+npm run dev
+```
+
+Modo producción:
+
+```bash
+npm start
+```
+
+---
+
+## 📌 Endpoints
+
+### Autenticación
+
+| Método | Endpoint |
+|---------|----------|
+| POST | /api/auth/register |
+| POST | /api/auth/login |
+
+---
+
+### Publicaciones
+
+| Método | Endpoint |
+|---------|----------|
+| POST | /api/posts |
+| GET | /api/posts |
+| GET | /api/posts/:postId |
+| PUT | /api/posts/:postId |
+| DELETE | /api/posts/:postId |
+
+---
+
+### Comentarios
+
+| Método | Endpoint |
+|---------|----------|
+| POST | /api/posts/:postId/comments |
+| GET | /api/posts/:postId/comments |
+| GET | /api/comments/:commentId |
+| PUT | /api/comments/:commentId |
+| DELETE | /api/comments/:commentId |
+
+---
+
+## 🔒 Seguridad
+
+- Autenticación mediante JWT.
+- Contraseñas encriptadas con bcrypt.
+- Middleware para proteger rutas privadas.
+- Validación de propietario para actualizar y eliminar publicaciones y comentarios.
+
+---
+
+## ✨ Funcionalidades
+
+- Registro de usuarios.
+- Inicio de sesión.
+- CRUD de publicaciones.
+- CRUD de comentarios.
+- Protección de rutas.
+- Manejo centralizado de errores.
+- Base de datos MongoDB Atlas.
+
+---
+
+## 👨‍💻 Autor
+
+**José**
+
+Proyecto desarrollado como parte de mi proceso de formación en Desarrollo Backend con Node.js, Express y MongoDB.
+
+---
+
+> **"Los grandes proyectos no se terminan en un día. Se construyen... una línea de código a la vez."** 💙
