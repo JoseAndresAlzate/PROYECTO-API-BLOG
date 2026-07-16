@@ -47,6 +47,29 @@ export const getPosts = async (req, res, next)=> {
     };
 };
 
+export const getPostById = async (req, res, next) => {
+    try {
+
+        const { postId } = req.params;
+
+        const post = await Post.findById(postId).populate("user", "name email");
+
+        if (!post) {
+            const error = new Error("Post no encontrado.");
+            error.status = 404;
+            return next(error);
+        }
+
+        res.status(200).json({
+            success: true,
+            post,
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const updatePost = async (req, res, next) => {
 
    try {
